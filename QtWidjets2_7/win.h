@@ -1,21 +1,42 @@
-#ifndef WIN_H
-#define WIN_H
+#pragma once
+#ifndef win_h
+#define win_h
+#include <QtGui>
+#include <QFrame>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QMessageBox>
 
-#include <QWidget>
-
-QT_BEGIN_NAMESPACE
-namespace Ui { class win; }
-QT_END_NAMESPACE
-
-class win : public QWidget
+// Основное окно приложения
+class Win : public QWidget
 {
     Q_OBJECT
-
+protected:
+    QTextCodec* _codec;			// Текстовый кодек
+    QFrame* _frame;				// Рамка
+    QLabel* _inputLabel;		// Метка редактора ввода
+    QLabel* _outputLabel;		// Метка редактора вывода
+    QLineEdit* _inputEdit;		// Редактор ввода
+    QLineEdit* _outputEdit;		// Редактор вывода
+    QPushButton* _nextButton;	// Кнопка "Следующий"
+    QPushButton* _exitButton;	// Кнопка "Выход"
 public:
-    win(QWidget *parent = nullptr);
-    ~win();
-
-private:
-    Ui::win *ui;
+    Win(QWidget* parent = 0);	// Конструктор окна
+public slots:
+    void begin();	// Начальная настройка интерфейса
+    void calc();	// Реализация вычислений
 };
-#endif // WIN_H
+
+// Валидатор ввода
+class StrValidator : public QValidator
+{
+public:
+    StrValidator(QObject* parent) :QValidator(parent) {}
+    virtual State validate(QString& str, int& position) const
+    {
+        return Acceptable;
+    }
+};
+#endif
