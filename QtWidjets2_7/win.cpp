@@ -64,7 +64,8 @@ void Win::calc()
     bool Ok = true; float r, a;
     QString str = _inputEdit->text();
     a = str.toDouble(&Ok);
-    if (Ok)
+
+    if (a <= DBL_MAX && Ok)
     {
         r = a * a;
         str.setNum(r);
