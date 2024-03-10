@@ -4,45 +4,60 @@
 // Родитель
 Win::Win(QWidget* parent) : QWidget(parent)
 {
+    // Настраиваем кодировку
     _codec = QTextCodec::codecForName("Windows-1251");
+
+    // Задаём имя окна
     setWindowTitle(_codec->toUnicode("Возведение в квадрат"));
+
+    // Инициализация окна и его настройка
     _frame = new QFrame(this);
     _frame->setFrameShadow(QFrame::Raised);
     _frame->setFrameShape(QFrame::Panel);
-    _inputLabel = new QLabel(_codec->toUnicode("Введите число:"),
-        this);
+
+    // Настраиваем заголовок и поле для ввода числа
+    _inputLabel = new QLabel(_codec->toUnicode("Введите число:"), this);
     _inputEdit = new QLineEdit("", this);
-    StrValidator* v = new StrValidator(_inputEdit);
-    _inputEdit->setValidator(v);
-    _outputLabel = new QLabel(_codec->toUnicode("Результат:"),
-        this);
+
+    // Инициализируем валидатор и првязываем к полю ввода
+    StrValidator* validator = new StrValidator(_inputEdit);
+    _inputEdit->setValidator(validator);
+
+    // Инициализация поля вывода и заголовка поля вывода
+    _outputLabel = new QLabel(_codec->toUnicode("Результат:"), this);
     _outputEdit = new QLineEdit("", this);
-    _nextButton = new QPushButton(_codec->toUnicode("Следующее"),
-        this);
-    _exitButton = new QPushButton(_codec->toUnicode("Выход"),
-        this);
-    // компоновка приложения выполняется согласно рисунку 2
-    QVBoxLayout* vLayout1 = new QVBoxLayout(_frame);
+
+    // Инициализируем кнопки
+    _nextButton = new QPushButton(_codec->toUnicode("Следующее"), this);
+    _exitButton = new QPushButton(_codec->toUnicode("Выход"), this);
+
+    /// Компоновка приложения
+    // Инициализируем объекты для компановки
+    QVBoxLayout* vLayout1 = new QVBoxLayout(_frame);    
+    QVBoxLayout* vLayout2 = new QVBoxLayout();
+    QHBoxLayout* hLayout = new QHBoxLayout(this);
+
+    // Компануем объекты первого Layout-а
     vLayout1->addWidget(_inputLabel);
     vLayout1->addWidget(_inputEdit);
     vLayout1->addWidget(_outputLabel);
     vLayout1->addWidget(_outputEdit);
     vLayout1->addStretch();
-    QVBoxLayout* vLayout2 = new QVBoxLayout();
 
+    // Компануем объекты второго Layout-а
     vLayout2->addWidget(_nextButton);
     vLayout2->addWidget(_exitButton);
     vLayout2->addStretch();
-    QHBoxLayout* hLayout = new QHBoxLayout(this);
     hLayout->addWidget(_frame);
     hLayout->addLayout(vLayout2);
+
+    // Преднастройка интерфейса
     begin();
-    connect(_exitButton, SIGNAL(clicked(bool)),
-        this, SLOT(close()));
-    connect(_nextButton, SIGNAL(clicked(bool)),
-        this, SLOT(begin()));
-    connect(_inputEdit, SIGNAL(returnPressed()),
-        this, SLOT(calc()));
+
+    // Подключаем слоты и сигналы(используем современый стиль подключения)
+    connect(_exitButton, &QPushButton::clicked, this, &QWidget::close);
+    connect(_nextButton, &QPushButton::clicked, this, &Win::begin);
+    connect(_inputEdit, &QLineEdit::returnPressed, this, &Win::calc);
 }
 
 // Начальная настройка интерфейса
