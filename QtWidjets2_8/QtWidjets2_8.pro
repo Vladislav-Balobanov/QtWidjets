@@ -18,8 +18,6 @@ HEADERS += \
 FORMS += \
     win.ui
 
-TRANSLATIONS += \
-    QtWidjets2_8_ru_RU.ts
 CONFIG += lrelease
 CONFIG += embed_translations
 
