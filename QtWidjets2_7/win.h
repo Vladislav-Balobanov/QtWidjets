@@ -1,13 +1,7 @@
 #pragma once
 #ifndef win_h
 #define win_h
-#include <QtGui>
-#include <QFrame>
-#include <QLabel>
-#include <QLineEdit>
-#include <QPushButton>
-#include <QVBoxLayout>
-#include <QMessageBox>
+#include <QtWidgets>
 
 // Основное окно приложения
 class Win : public QWidget
@@ -34,7 +28,7 @@ class StrValidator : public QValidator
 {
 public:
     StrValidator(QObject* parent) :QValidator(parent) {}
-    virtual State validate(QString& str, int& position) const
+    virtual State validate(QString& , int& position) const
     {
         return Acceptable;
     }

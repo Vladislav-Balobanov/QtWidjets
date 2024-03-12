@@ -80,7 +80,19 @@ void Win::calc()
     QString str = _inputEdit->text();
     a = str.toDouble(&Ok);
 
-    if (a <= DBL_MAX && Ok)
+    if(a >= DBL_MAX)
+    {
+        QMessageBox msgBox
+        (	QMessageBox::Information,
+            _codec->toUnicode("Возведение в квадрат."),
+            _codec->toUnicode("Невозможно вычислить результат. Число слишком велико."),
+            QMessageBox::Ok
+        );
+
+        msgBox.exec();
+        _inputEdit->clear();
+    }
+    else if (Ok)
     {
         r = a * a;
         str.setNum(r);
