@@ -1,21 +1,19 @@
+#pragma once
 #ifndef WIN_H
 #define WIN_H
 
 #include <QWidget>
-
-QT_BEGIN_NAMESPACE
-namespace Ui { class Win; }
-QT_END_NAMESPACE
+#include "area.h"
+#include <QPushButton>
+#include <QVBoxLayout>
 
 class Win : public QWidget
 {
-    Q_OBJECT
-
+protected:
+    QTextCodec* _codec;
+    Area* _area; // область отображения рисунка
+    QPushButton* _button;
 public:
-    Win(QWidget *parent = nullptr);
-    ~Win();
-
-private:
-    Ui::Win *ui;
+    Win();
 };
 #endif // WIN_H
